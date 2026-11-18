@@ -58,6 +58,7 @@ pnpm check      # astro check 类型检查
 - 站内链接写相对/根路径即可，fuwari 会自动加 `base`；外部链接要加 `external: true` 才会新开标签页。
 - `.gitignore` 已排除 `dist/`、`node_modules/`、`.astro/`、`.env`。不要把这些提交上去。
 - **本地删掉文章后，构建仍会生成旧文章页面并报 `Image file not found`**：Astro 5 的内容缓存是 `node_modules/.astro/data-store.json`，删 `.astro/` 没用。清缓存：`mv node_modules/.astro /tmp/astro-cache-backup`，再重新 `pnpm build`。
+- **同一个坑在 CI 上更隐蔽**：`withastro/action@v5` 默认 `cache: true`，缓存 `node_modules/.astro`，key 是 `astro-cache-<os>-<sha>` 但 `restore-keys` 是前缀 `astro-cache-<os>-`，也就是**不管内容变没变都命中上一次的缓存**。删文章后 Actions 会拿旧 data-store 去渲染已删除的文章，报 `[ERROR] Image file not found: src/content/posts/guide/cover.jpeg` + `file is not a function` 然后 exit 1。所以 `deploy.yml` 里明确设了 `cache: false`，不要打开。
 - 文章集合为空时构建会输出 `The collection "posts" does not exist or is empty`，只是警告，exit code 仍为 0。`src/content/posts/.gitkeep` 用来保住空目录，不要删。
 - `src/assets/images/demo-banner.png`（878KB）和 `demo-avatar.png`（407KB）已不再被引用，删除前先问。
 - `vercel.json` 是模板遗留文件，GitHub Pages 用不到，无害。

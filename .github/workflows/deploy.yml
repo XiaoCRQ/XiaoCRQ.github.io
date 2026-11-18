@@ -20,6 +20,7 @@ jobs:
         uses: withastro/action@v5
         with:
           node-version: 22
+          cache: false # 缓存的 key 只看 commit sha，而 restore-keys 会命中任意旧缓存，会把已删文章的 node_modules/.astro 数据带回来，导致构建报 Image file not found
 
   deploy:
     needs: build
