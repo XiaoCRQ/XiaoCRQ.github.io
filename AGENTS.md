@@ -34,7 +34,7 @@ pnpm check      # astro check 类型检查
 | `astro.config.mjs` | `site` 必须是 `https://xiaocrq.github.io/`；`base` 保持 `/`；`trailingSlash: "always"`（URL 一律带尾斜杠） |
 | `src/config.ts` | 站点标题（`title: "XiaoCRQ"`）、副标题、`lang: "en"`（界面文案是英文，正文内容是中文）、主题色、导航栏、侧边栏资料卡片、许可证 |
 | `src/content/posts/` | 文章，每篇一个 `.md`，URL 是 `/posts/<文件名>/`（不是根路径）。**目前是空的**，只有 `.gitkeep` 占位 |
-| `src/content/spec/about.md` | 「关于」页正文 |
+| `src/content/spec/about.md` | About 页正文（页面标题来自 i18n，正文里的 `# About` 是手写的） |
 | `src/assets/images/avatar.jpg` | 头像（构建时由 Astro 转 webp 优化） |
 | `.github/workflows/deploy.yml` | 推送到 `main` 自动构建 + 部署到 Pages |
 
@@ -59,7 +59,7 @@ pnpm check      # astro check 类型检查
 - `.gitignore` 已排除 `dist/`、`node_modules/`、`.astro/`、`.env`。不要把这些提交上去。
 - **本地删掉文章后，构建仍会生成旧文章页面并报 `Image file not found`**：Astro 5 的内容缓存是 `node_modules/.astro/data-store.json`，删 `.astro/` 没用。清缓存：`mv node_modules/.astro /tmp/astro-cache-backup`，再重新 `pnpm build`。
 - 文章集合为空时构建会输出 `The collection "posts" does not exist or is empty`，只是警告，exit code 仍为 0。`src/content/posts/.gitkeep` 用来保住空目录，不要删。
-- `src/assets/images/demo-banner.png`（898KB）和 `demo-avatar.png` 已不再被引用，删除前先问。
+- `src/assets/images/demo-banner.png`（878KB）和 `demo-avatar.png`（407KB）已不再被引用，删除前先问。
 - `vercel.json` 是模板遗留文件，GitHub Pages 用不到，无害。
 - 给用户的写作手册在 `usage.md`，改写作相关规则时两处一起更新。
 
