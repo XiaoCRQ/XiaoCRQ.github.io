@@ -77,7 +77,7 @@ lang: ''
 | `tags` | 否 | 标签数组，显示在文章里，可点击筛选 |
 | `category` | 否 | 分类，单个字符串 |
 | `draft` | 否 | `true` 时**不会**被构建出来，等于不发布；本地 dev 也不显示 |
-| `lang` | 否 | 留空即使用站点语言（`zh_CN`） |
+| `lang` | 否 | 留空即使用站点语言（现在是 `en`） |
 
 ## 五、写作语法
 
@@ -151,7 +151,7 @@ $$
 |---|---|
 | 浏览器标签页 / 左上角标题 | `siteConfig.title`（现在是 `XiaoCRQ`） |
 | 标题下面那行小字 | `siteConfig.subtitle` |
-| 界面语言 | `siteConfig.lang` |
+| 界面语言（导航栏、列表标题等文案） | `siteConfig.lang`（现在是 `en` → Home/Archive/About；改成 `zh_CN` → 首页/归档/关于） |
 | 主题色 | `siteConfig.themeColor.hue`（0 红 / 200 青 / 250 蓝 / 345 粉） |
 | 顶部导航 | `navBarConfig.links` |
 | 侧边栏头像、名字、简介 | `profileConfig` |
@@ -168,7 +168,7 @@ $$
   ```
   然后重新 `pnpm build`。换电脑/CI 上不会遇到，只有本地删文章才会。
 - **`The collection "posts" does not exist or is empty`**：文章全删空后构建会刷这行警告，只是警告，构建仍然成功（exit 0），不用管。`src/content/posts/.gitkeep` 是用来保住这个空目录的，别删。
-- **中文搜索搜不全**：Pagefind 对 `zh-cn` 不做词干处理（构建日志里的 `doesn't support stemming`），所以搜"比赛"不会命中"比赛的"。属于正常现象。
+- **中文搜索搜不全**：仅当 `lang` 改回 `zh_CN` 时出现 —— Pagefind 对 `zh-cn` 不做词干处理（日志里 `doesn't support stemming`），搜"比赛"不会命中"比赛的"。现在是 `en`，没这个问题。
 - **网址一律带尾斜杠**：`/posts/xxx/` 能开，`/posts/xxx` 会 404。这是 `trailingSlash: "always"` 决定的，分享链接时注意。
 - **推送只有你能做**：这台机器上 `git push` 会因为 SSH key 未授权而失败（`Permission denied (publickey)`）。要用 GitHub 上已配置的 SSH key 或令牌。AI 助手只能改代码，推送要你自己执行。
 - **部署状态在哪看**：https://github.com/XiaoCRQ/XiaoCRQ.github.io/actions —— 绿色 = 已上线，红色 = 构建失败，点进去能看到具体报错。
